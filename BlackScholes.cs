@@ -83,17 +83,17 @@ namespace Quantum
 
         [ExcelFunction(Description = "Black-Scholes Price")]
         public static double BlackScholesPrice(
-    [ExcelArgument("True if it is a call options")] bool isCallOption,
-    [ExcelArgument("Spot Price")] double spot,
-    [ExcelArgument("Strike Price")] double strike,
-    [ExcelArgument("Time to maturity")] double t,
-    [ExcelArgument("Continuous interest rate")] double r,
-    [ExcelArgument("Continuous dividend yield")] double q,
-    [ExcelArgument("Vol")] double vol,
-    [ExcelArgument("Use RHS")] bool useRhs)
+        [ExcelArgument("True if it is a call options")] bool isCallOption,
+        [ExcelArgument("Spot Price")] double spot,
+        [ExcelArgument("Strike Price")] double strike,
+        [ExcelArgument("Time to maturity")] double t,
+        [ExcelArgument("Continuous interest rate")] double r,
+        [ExcelArgument("Continuous dividend yield")] double q,
+        [ExcelArgument("Vol")] double vol,
+        [ExcelArgument("Use RHS")] bool useRhs)
 
         {
-            return BlackScholes.Price(isCallOption, spot, strike, t, r, q, vol, useRhs);
+            return Price(isCallOption, spot, strike, t, r, q, vol, useRhs);
         }
 
 
@@ -109,7 +109,7 @@ namespace Quantum
             [ExcelArgument("Vol")] double vol,
             [ExcelArgument("Use RHS")] bool useRhs)
         {
-            return BlackScholes.Delta(isCallOption, spot, strike, t, r, q, vol, useRhs);
+            return Delta(isCallOption, spot, strike, t, r, q, vol, useRhs);
         }
 
 
@@ -124,7 +124,7 @@ namespace Quantum
             [ExcelArgument("Use RHS")] bool useRhs)
 
         {
-            return BlackScholes.StraddlePrice(spot, strike, t, r, q, vol, useRhs);
+            return StraddlePrice(spot, strike, t, r, q, vol, useRhs);
         }
 
 
@@ -140,7 +140,7 @@ namespace Quantum
             [ExcelArgument("Use RHS")] bool useRhs)
 
         {
-            return BlackScholes.StraddleDelta(spot, strike, t, r, q, vol, useRhs);
+            return StraddleDelta(spot, strike, t, r, q, vol, useRhs);
         }
 
 
