@@ -17,6 +17,8 @@ namespace SqliteTester
 
         private static void Main(string[] args)
         {
+            var temp = new PostgreSqlConnection();
+            
             var sqliteConn = new QSqliteConnection();
             const string query = "Select DISTINCT ticker from stock_prices";
             var dt = sqliteConn.ExecuteQueryCommand(query);
@@ -25,6 +27,7 @@ namespace SqliteTester
             dt = sqliteConn.ExecuteQueryCommand(query2);
 
         }
+
 
         private static SqliteConnection CreateConnection()
         {

@@ -6,14 +6,15 @@ using Connection;
 using Deedle.Math;
 using Utility;
 using Accord.Statistics.Distributions.Univariate;
+using Tyche;
 
 namespace Quantum
 {
     public static class ExcelInterface
     
     {
-        public static MsSqlConnection Conn = new MsSqlConnection();
-        public static RunStartup StartupCompleted = new RunStartup();
+        public static MsSqlConnection Conn = new();
+        public static RunStartup StartupCompleted = new();
 
         [ExcelFunction(Description = "Create Portfolio")]
         public static string CreatePortfolio(
