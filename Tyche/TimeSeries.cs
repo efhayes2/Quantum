@@ -12,13 +12,6 @@ namespace Tyche
         public DateTime[] Dates { get; }
 
 
-        public TimeSeries(string name, DateTime[] dates, Dictionary<DateTime, double> numbers)
-        {
-            Dates = dates;
-            Numbers = numbers;
-            Name = name;
-        }
-
         public TimeSeries(string name, List<DateTime> dates, IEnumerable<double> price)
         {
             Numbers = dates.Zip(price, (k, v) => new { Key = k, Value = v })

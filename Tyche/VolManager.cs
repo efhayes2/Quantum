@@ -9,8 +9,6 @@ namespace Tyche
 {
     public class VolManager
     {
-        public static RunStartup StartupCompleted = new();
-
         public static string CreatePortfolio(object[] tickers, object[] quantities)
 
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Tyche
 {
@@ -8,10 +9,10 @@ namespace Tyche
         private static void Main(string[] args)
         {
             Console.WriteLine("Running test of Tyche calculator ...");
-            var watch = new System.Diagnostics.Stopwatch();
+            var watch = new Stopwatch();
             watch.Start();
 
-            var startupCompleted = new RunStartup();
+            var startupCompleted = new RunStartup(watch);
 
             // var tickers = new object[] {"AAPL", "FB"};
             // var tickersString = new List<string>() { "AAPL", "FB", "GOOG", "MA", "MSFT", "TER", "V" };

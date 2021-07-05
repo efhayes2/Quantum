@@ -10,7 +10,7 @@ using Utility;
 using Accord.Math;
 using Accord.Statistics;
 using MathNet.Numerics.Statistics;
-
+using System.Diagnostics;
 
 
 namespace Tyche
@@ -19,13 +19,28 @@ namespace Tyche
     public class RunStartup
     {
         private static bool Initiated = false;
-        public RunStartup()
+        
+        private void PrintTime(Stopwatch watch)
         {
+            var elapsedTime = watch.ElapsedMilliseconds / 1000.0;
+            Console.WriteLine(elapsedTime < 60
+                ? $"Execution Time: {elapsedTime} s"
+                : $"Execution Time: {elapsedTime / 60.0} m");
+        }
+        
+        public RunStartup(Stopwatch watch)
+        {
+            Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds / 1000.0 / 60.0} m");
+
             if (Initiated) return;
             DataStore.RetrieveTickers();
+            PrintTime(watch);
             DataStore.RetrievePrices();
-            DataStore.ComputeCorrelationAndCovarianceMatrices();            
+            PrintTime(watch);
+            DataStore.ComputeCorrelationAndCovarianceMatrices();
+            PrintTime(watch);
             DataStore.CreateDataFrames();
+            PrintTime(watch);
             DataStore.SetDates();
 
             
@@ -45,7 +60,7 @@ namespace Tyche
     public static class DataStore
 
     {
-        private static string DefaultTable = "post_2019_prices";
+        private const string DefaultTable = "current_prices";
 
         private static readonly DateTime FirstEwmaDate = new DateTime(2019, 6, 4);
         private const int LookBackSize = 40;
@@ -75,8 +90,6 @@ namespace Tyche
         private static readonly ConcurrentDictionary<string, double> AnnualizedVolatilities = new();
         private static readonly ConcurrentDictionary<string, double> AnnualizedVariances = new();
 
-        // public static Dictionary<string, Dictionary<DateTime, double>> EwmaVariances =
-           // new Dictionary<string, Dictionary<DateTime, double>>();
         public static readonly ConcurrentDictionary<string, double> OneDayEwmaVariances = new();
         public static readonly ConcurrentDictionary<string, double> OneDayEwmaVols = new();
         public static readonly ConcurrentDictionary<string, double> OneDayEwmaAverageReturns = new();
@@ -101,8 +114,6 @@ namespace Tyche
 
         public static void RetrieveTickers(string table = null)
         {
-            //const string query = "Select DISTINCT ticker from stock_prices";
-
             table ??= DefaultTable;
 
             var query = $"Select DISTINCT ticker from {table}";
@@ -114,9 +125,6 @@ namespace Tyche
 
         public static void RetrievePrices(string table = null)
         {
-            var tickerCount = Tickers.Count;
-            var returnsMatrix = new double[tickerCount][];
-
             table ??= DefaultTable;
             var query = $"select price_date as date, ticker, close as price from {table} order by date desc";
             var dt = Conn.ExecuteQueryCommand(query);
